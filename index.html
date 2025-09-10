@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jewellery Cost Estimator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Jewellery Cost Estimator & Design Gallery</h1>
+  </header>
+
+  <main>
+    <section class="calculator">
+      <h2>Estimate Your Jewellery Cost</h2>
+      <form id="jewelleryForm">
+        <label>Type:
+          <select id="type">
+            <option value="ring">Ring</option>
+            <option value="necklace">Necklace</option>
+            <option value="bracelet">Bracelet</option>
+          </select>
+        </label>
+        <label>Material:
+          <select id="material">
+            <option value="gold">Gold</option>
+            <option value="silver">Silver</option>
+            <option value="platinum">Platinum</option>
+          </select>
+        </label>
+        <label>Weight (grams):
+          <input type="number" id="weight" min="1" value="10">
+        </label>
+        <label>Gemstone:
+          <select id="gemstone">
+            <option value="none">None</option>
+            <option value="diamond">Diamond</option>
+            <option value="ruby">Ruby</option>
+            <option value="sapphire">Sapphire</option>
+          </select>
+        </label>
+        <button type="button" onclick="calculateCost()">Calculate</button>
+      </form>
+      <div id="result"></div>
+    </section>
+
+    <section class="gallery">
+      <h2>Jewellery Designs</h2>
+      <div class="image-grid">
+        <img src="assets/images/ring1.jpg" alt="Gold Ring">
+        <img src="assets/images/necklace1.jpg" alt="Diamond Necklace">
+        <img src="assets/images/bracelet1.jpg" alt="Ruby Bracelet">
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #d4af37;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  padding: 20px;
+}
+
+.calculator, .gallery {
+  margin-bottom: 40px;
+}
+
+form label {
+  display: block;
+  margin: 10px 0;
+}
+
+button {
+  background-color: #d4af37;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.image-grid img {
+  width: 200px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+function calculateCost() {
+  const type = document.getElementById('type').value;
+  const material = document.getElementById('material').value;
+  const weight = parseFloat(document.getElementById('weight').value);
+  const gemstone = document.getElementById('gemstone').value;
+
+  let basePricePerGram = {
+    gold: 60,
+    silver: 25,
+    platinum: 80
+  };
+
+  let gemstonePrice = {
+    none: 0,
+    diamond: 500,
+    ruby: 300,
+    sapphire: 250
+  };
+
+  const materialCost = basePricePerGram[material] * weight;
+  const gemCost = gemstonePrice[gemstone];
+  const totalCost = materialCost + gemCost;
+
+  document.getElementById('result').innerHTML = `
+    <p><strong>Estimated Cost:</strong> $${totalCost.toFixed(2)}</p>
+    <p>(${material} - ${weight}g + ${gemstone})</p>
+  `;
+}
